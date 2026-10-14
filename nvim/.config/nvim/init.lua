@@ -574,6 +574,11 @@ do
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+  -- 个人配置：buffer 快速切换与关闭
+  vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev [B]uffer' })
+  vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next [B]uffer' })
+  vim.keymap.set('n', '<leader>bd', function() require('mini.bufremove').delete() end, { desc = '[D]elete [B]uffer' })
+
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
   vim.api.nvim_create_autocmd('LspAttach', {
@@ -745,7 +750,7 @@ do
   local servers = {
     -- clangd = {},
     -- gopls = {},
-    -- pyright = {},
+    pyright = {},
     -- tsc = {},
     --
     -- Some languages (like rust) have entire language plugins that can be useful:
@@ -906,7 +911,9 @@ do
       -- <c-k>: Toggle signature help
       --
       -- See `:help blink-cmp-config-keymap` for defining your own keymap
-      preset = 'default',
+      preset = 'enter', -- <CR> 采纳；Tab/S-Tab 覆盖为切换候选（菜单关闭时仍跳转 snippet 占位符）
+      ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+      ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
