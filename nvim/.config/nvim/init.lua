@@ -118,6 +118,21 @@ do
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
 
+  -- 个人配置：OSC52 剪贴板——yank 内容穿过 SSH/zellij 写入本地终端剪贴板
+  --  前提：本地终端需支持并放行 OSC52（WezTerm/Ghostty/Alacritty 默认支持）
+  --  粘贴方向不受支持（zellij 拦截读取），仍用终端粘贴
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+  }
+
   -- Sync clipboard between OS and Neovim.
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
