@@ -139,6 +139,12 @@ do
   --  See `:help 'clipboard'`
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
+  -- 个人配置：缩进 4 空格（与 .stylua.toml 一致）
+  vim.o.shiftwidth = 4
+  vim.o.tabstop = 4
+  vim.o.softtabstop = 4
+  vim.o.expandtab = true
+
   -- Enable break indent
   vim.o.breakindent = true
 
