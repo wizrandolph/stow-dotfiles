@@ -100,6 +100,9 @@ do
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
+  if vim.g.neovide then -- 只对 neovide 起作用
+    vim.o.guifont = "Maple Mono NF CN:h14" -- text below applies for VimScript
+  end
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
